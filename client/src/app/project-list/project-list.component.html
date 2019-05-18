@@ -1,0 +1,19 @@
+
+<div class="card-columns">
+  <div *ngFor="let project of (projects$ | async)">
+              <!-- |  searchFilter: 'name' : searchedProject?.name 
+              |  searchFilter: 'priority' : searchedProject?.priority 
+              |  searchFilter: 'done' : searchedProject?.done" -->
+      <div class="card" [ngClass]="{'border-info': project.completed, 'border-warning': !project.completed }">
+          <div class="card-body">
+               <h5 class="card-title"> {{ project.name }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">
+                  <small>{{ project.startDate | date: 'dd/MM/yyyy' }}</small>
+                  <small *ngIf="project.endDate"> - {{ project.endDate | date: 'dd/MM/yyyy' }}</small>
+              </h6>
+              <p class="card-text">{{ project.description }}</p>
+              <a href="#" class="btn btn-primary btn-sm" [routerLink]="['/projects/detail', project?.id]">Vai al Progetto</a>
+          </div>
+      </div>
+  </div>
+</div>
