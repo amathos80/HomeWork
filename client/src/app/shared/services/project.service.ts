@@ -9,7 +9,7 @@ import { Inject, Injectable } from '@angular/core';
   })
 export class ProjectService {
 
-    baseApiUrl:string = "https://localhost:44361/api/"
+    baseApiUrl:string = "https://localhost:44361/api/projects"
 
 constructor(private http:HttpClient) {
     
@@ -21,14 +21,14 @@ constructor(private http:HttpClient) {
           );
     }
     getAll() {
-        return this.http.get<Project[]>(`${this.baseApiUrl}projects`)
+        return this.http.get<Project[]>(`${this.baseApiUrl}`)
           .pipe(
             catchError(this.handleError('getProjects', []))
           );
       }
     
       get(id: string | number) {
-        const url = `${this.baseApiUrl}/${id}`;
+        const url = `${this.baseApiUrl}/GetProject/${id}`;
         return this.http.get<Project>(url).pipe(
           tap(_ => console.log(`fetched project id=${id}`)),
           catchError(this.handleError<Project>(`getProject id=${id}`))

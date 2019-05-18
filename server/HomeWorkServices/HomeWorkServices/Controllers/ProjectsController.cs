@@ -29,10 +29,10 @@ namespace HomeWorkServices.Controllers
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        [HttpGet("GetProject/{id}")]
+        public async Task<ActionResult<Project>> GetProject(int id)
         {
-            return "value";
+            return await _projectRepository.GetByIdAsync(id);
         }
 
         // POST api/values
