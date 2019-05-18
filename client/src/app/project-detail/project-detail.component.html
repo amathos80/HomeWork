@@ -11,7 +11,7 @@
     </p>
     <button class="btn btn-warning btn-sm" routerLink="/projects/update/{{project.id}}">Modifica</button>
   </div>
-  <table class="table table-sm" *ngIf="project.tasks?.length; else notasks">
+  <table class="table table-sm" *ngIf="project.projectTasks?.length; else notasks">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -22,13 +22,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let task of project.tasks; let i = index">
-        <th scope="row">{{ i }}</th>
-        <td>{{ task.name }}</td>
-        <td>{{ task.startDate | date:"dd/MM/yyyy"}}</td>
-        <td>{{ task.duration }}</td>
+      <tr *ngFor="let projectTask of project.projectTasks; let i = index">
+        <th scope="row">{{ i+1 }}</th>
+        <td>{{ projectTask.name }}</td>
+        <td>{{ projectTask.startDate | date:"dd/MM/yyyy"}}</td>
+        <td>{{ projectTask.duration }}</td>
         <td><span class="badge"
-            [ngClass]="{'badge-success': task.isBillable, 'badge-danger': !task.isBillable}">F</span></td>
+            [ngClass]="{'badge-success': projectTask.isBillable, 'badge-danger': !projectTask.isBillable}">F</span></td>
       </tr>
     </tbody>
   </table>

@@ -42,9 +42,28 @@ namespace HomeWorkServices.Controllers
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost("UpdateProject")]
+        public async Task<bool> UpdateProject([FromBody] Project project)
         {
+            var originalProject = await _projectRepository.GetByIdAsync(project.Id);
+            originalProject.Name = project.Name;
+            originalProject.Priority = project.Priority;
+            originalProject.Completed = project.Completed;
+            originalProject.Description = project.Description;
+            originalProject.EndDate = project.EndDate;
+            originalProject.StartDate = project.StartDate;
+
+            foreach (var task in originalProject.ProjectTasks)
+            {
+                originalProject.ProjectTasks.Remove(task);
+            }
+
+            foreach (var task in project.ProjectTasks)
+            {
+                originalProject.ProjectTasks.Add(task);
+            }
+            return await _projectRepository.SaveChangesAsync() > 0;
+
         }
 
         // DELETE api/values/5

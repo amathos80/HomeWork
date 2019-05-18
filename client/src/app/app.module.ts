@@ -9,12 +9,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ProjectService } from './shared/services/project.service';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
+import { ProjectUpdateComponent } from './project-update/project-update.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProjectListComponent,
-    ProjectDetailComponent
+    ProjectDetailComponent,
+    ProjectUpdateComponent
    
   ],
   imports: [

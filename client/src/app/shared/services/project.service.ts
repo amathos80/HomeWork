@@ -36,7 +36,8 @@ constructor(private http:HttpClient) {
       }
     
       update(project: Project) {
-        return this.http.put(this.baseApiUrl, project).pipe(
+        const url = `${this.baseApiUrl}/UpdateProject`;
+        return this.http.post(url, project).pipe(
           tap(_ => console.log(`updated project id=${project.id}`)),
           catchError(this.handleError<any>('updateProject'))
         );

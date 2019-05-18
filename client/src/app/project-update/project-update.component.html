@@ -1,0 +1,103 @@
+
+<div class="row">
+  <div class="col">
+    <form *ngIf="editProjectForm" [formGroup]="editProjectForm" (ngSubmit)="submitProjectForm()">
+      <div class="form-row">
+        <div class="col form-group">
+          <button type="submit" class="btn btn-primary btn-sm"
+            [disabled]="!editProjectForm.valid && editProjectForm.touched">Salva le Modifiche</button>
+          <a class="btn btn-light btn-sm" (click)="clear()">Annulla</a>
+        </div>
+      </div>
+      <div class="form-row">
+      
+        <div class="col-md-6 form-group">
+          <label>Nome</label>
+          <input type="text" class="form-control" placeholder="Nome" formControlName="name">
+          <p class="text-danger" *ngIf="editProjectForm.get('name').invalid && editProjectForm.get('name').touched">
+            <small>Il campo è obbligatorio</small></p>
+        </div>
+        <div class="col form-group">
+            <label>Priorità</label>
+          <select class="form-control" formControlName="priority">
+            <option value="low">Bassa</option>
+            <option value="medium">Media</option>
+            <option value="high">Alta</option>
+          </select>
+          <p class="text-danger"
+            *ngIf="editProjectForm.get('priority').invalid && editProjectForm.get('priority').touched"><small>Il campo è
+              obbligatorio</small></p>
+        </div>
+      </div>
+      <div>
+        <div class="form-group">
+            <label>Descrizione</label>
+          <textarea class="form-control" placeholder="Descrizione" formControlName="description">
+                </textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+              <label>Data Inizio</label>
+            <input type="date" class="form-control" placeholder="Data Inizio" formControlName="startDate">
+            <p class="text-danger" *ngIf="editProjectForm.get('startDate').invalid && editProjectForm.get('startDate').touched">
+              <small>Il campo è obbligatorio</small></p>
+          </div>
+          <div class="form-group col-md-6">
+              <label>Data Fine</label>
+            <input type="date" class="form-control" placeholder="Data Fine" formControlName="endDate">
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div formArrayName="projectTasks">
+        <div class="row">
+          <div class="col">
+            <h4>Tasks</h4>
+          </div>
+          <div class="col text-right">
+            <button class="btn btn-light btn-sm" (click)="onAddTask()" [disabled]="!editProjectForm.valid">Aggiungi
+              Task</button>
+          </div>
+        </div>
+        <hr />
+        <div class="form-row "
+          *ngFor="let taskControl of editProjectForm.get('projectTasks').controls; let i = index" [formGroupName]="i">
+          <div class="col form-group">
+              
+            <input type="text" class="form-control" formControlName="name">
+            <p class="text-danger" *ngIf="taskControl.get('name').invalid && taskControl.get('name').touched">
+                <small>Il campo è obbligatorio</small></p>
+              
+          </div>
+          <div class="col form-group">
+             
+            <input type="date" class="form-control" formControlName="startDate">
+            <p class="text-danger" *ngIf="taskControl.get('startDate').invalid && taskControl.get('startDate').touched">
+                <small>Il campo è obbligatorio</small></p>
+              
+              </div>
+          
+          <div class="col form-group">
+               
+            <input type="number" class="form-control"   formControlName="duration">
+            <p class="text-danger" *ngIf="taskControl.get('duration').invalid && taskControl.get('duration').touched">
+                <small>Il valore massimo consentito è 24</small></p>
+               
+              </div>
+          
+          <div class="col-auto">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" formControlName="isBillable">
+              <label class="form-check-label" for="exampleCheck1">Fatturabile</label>
+            </div>
+          </div>
+          <div class="col-auto">
+            <div class="form-check">
+              <span class="badge badge-danger" (click)="onDeleteTask(i)">x</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

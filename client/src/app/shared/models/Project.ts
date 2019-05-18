@@ -10,5 +10,5 @@ export interface Project
     priority: 'low' | 'medium' | 'high',
     completed:boolean,
     spentedHours:number,
-    tasks:ProjectTask[]
+    projectTasks:ProjectTask[]
 }

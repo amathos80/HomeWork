@@ -12,6 +12,6 @@ namespace HomeWorkServices.Repositories
         Task<bool> UpdateAsync(Project project);
         Task<Project> GetByIdAsync(int id);
         Task<List<Project>> GetAllAsync();
-
+        Task<int> SaveChangesAsync();
     }
 }
