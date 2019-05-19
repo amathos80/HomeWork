@@ -1,0 +1,70 @@
+
+<div class="row">
+  <div class="col">
+      <form #addForm="ngForm" (ngSubmit)="submitProjectForm()">
+          <div class="form-row">
+              <div class="col-md-6" class="form-group">
+                    <label>Nome</label>
+                  <input 
+                      type="text" 
+                      name="name" 
+                      class="form-control" 
+                      placeholder="Nome"
+                      required
+                      [(ngModel)]="project.name"
+                      #nameField="ngModel">
+                      <p class="text-danger" *ngIf="nameField.invalid && nameField.touched"><small>Il campo è obbligatorio</small></p>
+              </div>
+              
+              <div class="col" class="form-group">
+                  <label>Priorità</label>
+                  <select 
+                      class="form-control" 
+                      name="priority" 
+                      required
+                      [(ngModel)]="project.priority"
+                      #priorityField="ngModel">
+                      <option value="" ></option>
+                          <option value="low" >Bassa</option>
+                          <option value="medium">Media</option>
+                          <option value="high">Alta</option>
+                  </select>
+                  <p class="text-danger" *ngIf="priorityField.invalid && priorityField.touched"><small>Il campo è obbligatorio</small></p>
+              </div>
+
+             
+          </div>
+          <div >
+              <div class="form-group">
+                  <label>Descrizione</label>
+                  <textarea 
+                      class="form-control"
+                      name="description" 
+                      placeholder="Descrizione"
+                      required
+                      [(ngModel)]="project.description"
+                      #descriptionField="ngModel">
+                  </textarea>
+                  <p class="text-danger" *ngIf="descriptionField.invalid && descriptionField.touched"><small>Il campo è obbligatorio</small></p>
+              </div>
+              <div class="form-row">
+                  <div class="form-group col-md-6">
+                      <label>Data Inizio</label>
+                      <input 
+                          type="date"
+                          name="startDate" 
+                          class="form-control" 
+                          placeholder="Data Inizio"
+                          required
+                          [(ngModel)]="project.startDate"
+                          #dateField="ngModel">
+                          <p class="text-danger" *ngIf="dateField.invalid && dateField.touched"><small>Il campo è obbligatorio</small></p>
+                  </div>
+                  <div class="form-group col-md-6">                
+                  </div>
+              </div>
+              <button type="submit" [disabled]="addForm.invalid" class="btn btn-primary">Crea</button>
+          </div>
+      </form>
+  </div>
+</div>

@@ -15,7 +15,7 @@ constructor(private http:HttpClient) {
     
 }
     add(project: Project) {
-        return this.http.post<Project>(this.baseApiUrl, project).pipe(
+        return this.http.post<Project>(`${this.baseApiUrl}/AddProject`, project).pipe(
             tap((newProject: Project) => console.log(`added project w/ id=${newProject.id}`)),
             catchError(this.handleError<Project>('addProject'))
           );

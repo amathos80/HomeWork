@@ -16,10 +16,18 @@ namespace HomeWorkServices.Repositories
             _dbSet = context.Set<Project>();
             _context = context;
         }
-            public async Task<int> AddAsync(Project project)
+            public async Task AddAsync(Project project)
         {
-            await _dbSet.AddAsync(project);
-            return project.Id;
+            try
+            {
+                await _dbSet.AddAsync(project);
+               
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public Task<List<Project>> GetAllAsync()

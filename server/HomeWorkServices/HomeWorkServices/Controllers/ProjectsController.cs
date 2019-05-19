@@ -36,9 +36,21 @@ namespace HomeWorkServices.Controllers
         }
 
         // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("AddProject")]
+        public async Task<ActionResult<int>> AddProject([FromBody] Project project)
         {
+            try
+            {
+                await _projectRepository.AddAsync(project);
+                await _projectRepository.SaveChangesAsync();
+                return project.Id;
+                
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.GetBaseException().Message);
+              
+            }
         }
 
         // PUT api/values/5
@@ -53,9 +65,16 @@ namespace HomeWorkServices.Controllers
             originalProject.EndDate = project.EndDate;
             originalProject.StartDate = project.StartDate;
 
+            List<ProjectTask> toremove = new List<ProjectTask>();
+
             foreach (var task in originalProject.ProjectTasks)
             {
-                originalProject.ProjectTasks.Remove(task);
+                toremove.Add(task);
+            }
+
+            foreach (var item in toremove)
+            {
+               originalProject.ProjectTasks.Remove(item);
             }
 
             foreach (var task in project.ProjectTasks)

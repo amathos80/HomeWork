@@ -7,16 +7,18 @@ import { ProjectListComponent } from './project-list/project-list.component';
  
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { ProjectService } from './shared/services/project.service';
+
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
 import { ProjectUpdateComponent } from './project-update/project-update.component';
+import { ProjectAddComponent } from './project-add/project-add.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProjectListComponent,
     ProjectDetailComponent,
-    ProjectUpdateComponent
+    ProjectUpdateComponent,
+    ProjectAddComponent
    
   ],
   imports: [
