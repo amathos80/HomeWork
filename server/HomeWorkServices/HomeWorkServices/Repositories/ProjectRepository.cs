@@ -7,47 +7,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HomeWorkServices.Repositories
 {
-    public class ProjectRepository : IProjectRepository
+    public class ProjectRepository : BaseRepository<Project, int>, IProjectRepository
     {
-        private DbContext _context;
-        private DbSet<Project> _dbSet;
         public ProjectRepository(DbContext context)
+           : base(context)
         {
-            _dbSet = context.Set<Project>();
-            _context = context;
+
         }
-            public async Task AddAsync(Project project)
+        public IProjectRepository Include(IEnumerable<string> navigationProperties)
         {
-            try
+
+            foreach (var item in navigationProperties)
             {
-                await _dbSet.AddAsync(project);
-               
+               _queryableSet = _queryableSet.Include(item);
             }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
+            return this;
         }
 
-        public Task<List<Project>> GetAllAsync()
+        public IProjectRepository Include(string navigationProperty)
         {
-            return _dbSet.ToListAsync();
+
+            _queryableSet.Include(navigationProperty);
+            return this;
         }
 
-        public async Task<Project> GetByIdAsync(int id)
-        {
-            return  await _dbSet.Include(c=>c.ProjectTasks).FirstOrDefaultAsync(c => c.Id == id);
-        }
-
-        public async Task<int> SaveChangesAsync()
-        {
-           return await  _context.SaveChangesAsync();
-        }
-
-        public async Task<bool> UpdateAsync(Project project)
-        {
-            return await Task.FromResult<bool>(_dbSet.Update(project)!=null);
-        }
     }
 }

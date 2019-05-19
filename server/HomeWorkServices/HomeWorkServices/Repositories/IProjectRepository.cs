@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace HomeWorkServices.Repositories
 {
-    public interface IProjectRepository
+    public interface IProjectRepository : IBaseRepository<Project, int>
     {
-        Task AddAsync(Project project);
-        Task<bool> UpdateAsync(Project project);
-        Task<Project> GetByIdAsync(int id);
-        Task<List<Project>> GetAllAsync();
-        Task<int> SaveChangesAsync();
+        IProjectRepository Include(IEnumerable<string> navigationProperties);
+        IProjectRepository  Include(string navigationProperty);
     }
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using HomeWorkServices.Models;
 using HomeWorkServices.Repositories;
+using HomeWorkServices.Services.DTO;
+using HomeWorkServices.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomeWorkServices.Controllers
@@ -13,75 +15,72 @@ namespace HomeWorkServices.Controllers
     public class ProjectsController : ControllerBase
     {
         IProjectRepository _projectRepository;
-
-        public ProjectsController(IProjectRepository projectRepository)
+        IProjectService _projectService;
+        public ProjectsController(IProjectRepository projectRepository, IProjectService projectService)
         {
             _projectRepository = projectRepository;
+            _projectService = projectService;
         }
 
         // GET api/values
 
         [HttpGet("GetProjects")]
         [HttpGet("")]
-        public async Task<ActionResult<IEnumerable<Project>>> GetProjects()
-        {
-            return await _projectRepository.GetAllAsync();
-        }
-
-        // GET api/values/5
-        [HttpGet("GetProject/{id}")]
-        public async Task<ActionResult<Project>> GetProject(int id)
-        {
-            return await _projectRepository.GetByIdAsync(id);
-        }
-
-        // POST api/values
-        [HttpPost("AddProject")]
-        public async Task<ActionResult<int>> AddProject([FromBody] Project project)
+        public async Task<ActionResult<ICollection<ProjectDTO>>> GetProjects()
         {
             try
             {
-                await _projectRepository.AddAsync(project);
-                await _projectRepository.SaveChangesAsync();
-                return project.Id;
-                
+                return Ok(await _projectService.GetProjectsAsync());
             }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.GetBaseException().Message);
-              
+
+            }
+        }
+
+        // GET api/values/5
+        [HttpGet("GetProject/{id}")]
+        public async Task<ActionResult<ProjectDTO>> GetProject(int id)
+        {
+            try
+            {
+                return Ok(await _projectService.GetProjectByIdAsync(id));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.GetBaseException().Message);
+
+            }
+        }
+
+        // POST api/values
+        [HttpPost("AddProject")]
+        public async Task<ActionResult<int>> AddProject([FromBody] ProjectDTO project)
+        {
+            try
+            {
+                return Ok(await _projectService.AddProjectAsync(project));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.GetBaseException().Message);
+
             }
         }
 
         // PUT api/values/5
         [HttpPost("UpdateProject")]
-        public async Task<bool> UpdateProject([FromBody] Project project)
+        public async Task<ActionResult<bool>> UpdateProject([FromBody] ProjectDTO project)
         {
-            var originalProject = await _projectRepository.GetByIdAsync(project.Id);
-            originalProject.Name = project.Name;
-            originalProject.Priority = project.Priority;
-            originalProject.Completed = project.Completed;
-            originalProject.Description = project.Description;
-            originalProject.EndDate = project.EndDate;
-            originalProject.StartDate = project.StartDate;
-
-            List<ProjectTask> toremove = new List<ProjectTask>();
-
-            foreach (var task in originalProject.ProjectTasks)
+            try
             {
-                toremove.Add(task);
+                return Ok(await _projectService.UpdateProjectAsync(project));
             }
-
-            foreach (var item in toremove)
+            catch (Exception ex)
             {
-               originalProject.ProjectTasks.Remove(item);
+                return StatusCode(500, ex.GetBaseException().Message);
             }
-
-            foreach (var task in project.ProjectTasks)
-            {
-                originalProject.ProjectTasks.Add(task);
-            }
-            return await _projectRepository.SaveChangesAsync() > 0;
 
         }
 

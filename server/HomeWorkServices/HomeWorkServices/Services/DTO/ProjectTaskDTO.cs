@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HomeWorkServices.Models
+namespace HomeWorkServices.Services.DTO
 {
-    public class ProjectTask:BaseEntity<int>
+    public class ProjectTaskDTO
     {
-       
+        public int Id { get; set; }
+
         public string Name { get; set; }
         public DateTime StartDate { get; set; }
         public double Duration { get; set; } = 0;

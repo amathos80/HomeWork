@@ -9,6 +9,6 @@ export class Project
     endDate?:Date;
     priority: 'low' | 'medium' | 'high';
     completed:boolean;
-    spentedHours:number;
+    spentHours:number;
     projectTasks:ProjectTask[]
 }
