@@ -55,6 +55,13 @@ namespace HomeWorkServices
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<HomeWorkContext>();
+                context.Database.Migrate();
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
