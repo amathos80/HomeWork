@@ -10,7 +10,7 @@ namespace HomeWorkServices.Repositories
 
     public interface IReadOnlyRepository<T, TKey> where T : BaseEntity<TKey>
     {
-        Task<T> GetByIdAsync(TKey id);
+        Task<T> GetByAsync(Expression<Func<T, bool>> predicate = null, string[] navigations=null);
         IQueryable<T> GetAll();
         Task<ICollection<T>> GetAllAsync();
        

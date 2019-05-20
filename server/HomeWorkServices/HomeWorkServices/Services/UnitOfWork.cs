@@ -20,9 +20,9 @@ namespace HomeWorkServices.Services
         {
             return _context.SaveChanges();
         }
-        public Task<int> CommitAsync()
+        public async Task<int> CommitAsync()
         {
-            return _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync();
         }
 
         public void Dispose()

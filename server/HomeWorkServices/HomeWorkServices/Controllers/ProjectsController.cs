@@ -45,7 +45,7 @@ namespace HomeWorkServices.Controllers
         {
             try
             {
-                return Ok(await _projectService.GetProjectByIdAsync(id));
+                return Ok(await _projectService.GetProjectByIdAsync(id, new string[] { "ProjectTasks" }));
             }
             catch (Exception ex)
             {
@@ -69,13 +69,28 @@ namespace HomeWorkServices.Controllers
             }
         }
 
+        [HttpGet("ProjectNameExist/{name}/{id?}")]
+        public async Task<ActionResult<bool>> ProjectNameExist(string name,int? id)
+        {
+
+            try
+            {
+                return Ok(await _projectService.ProjectExistAsync(name,id));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.GetBaseException().Message);
+
+            }
+        }
+
         // PUT api/values/5
         [HttpPost("UpdateProject")]
         public async Task<ActionResult<bool>> UpdateProject([FromBody] ProjectDTO project)
         {
             try
             {
-                return Ok(await _projectService.UpdateProjectAsync(project));
+                return Ok(await _projectService.UpdateProjectAsync(project,new string[] { "ProjectTasks" }));
             }
             catch (Exception ex)
             {

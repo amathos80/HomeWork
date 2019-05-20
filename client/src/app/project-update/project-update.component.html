@@ -1,24 +1,29 @@
 
+<hw-header [title]="title" [buttonType]="'btn-link'" [buttonLabel]="'Torna ad elenco progetti'" [buttonLink]="'/projects'" ></hw-header>
+
 <div class="row">
   <div class="col">
     <form *ngIf="editProjectForm" [formGroup]="editProjectForm" (ngSubmit)="submitProjectForm()">
       <div class="form-row">
         <div class="col form-group">
-          <button type="submit" class="btn btn-primary btn-sm"
+          <button type="submit" class="btn btn-primary btn-sm float-right"
             [disabled]="!editProjectForm.valid && editProjectForm.touched">Salva le Modifiche</button>
-          <a class="btn btn-light btn-sm" (click)="clear()">Annulla</a>
+          <a class="btn btn-light btn-sm float-right" (click)="clear()">Annulla</a>
         </div>
       </div>
       <div class="form-row">
       
         <div class="col-md-6 form-group">
-          <label>Nome</label>
+          <label>Nome *</label>
           <input type="text" class="form-control" placeholder="Nome" formControlName="name">
-          <p class="text-danger" *ngIf="editProjectForm.get('name').invalid && editProjectForm.get('name').touched">
-            <small>Il campo è obbligatorio</small></p>
+          <p class="text-danger" *ngIf="editProjectForm.get('name').errors?.uniqueName && editProjectForm.get('name').touched">
+            <small>Nome progetto già esistente</small></p>
+            <p class="text-danger" *ngIf="editProjectForm.get('name').errors?.required && editProjectForm.get('name').touched">
+              <small>Il campo è obbligatorio</small></p>
+
         </div>
         <div class="col form-group">
-            <label>Priorità</label>
+            <label>Priorità *</label>
           <select class="form-control" formControlName="priority">
             <option value="low">Bassa</option>
             <option value="medium">Media</option>
@@ -37,7 +42,7 @@
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
-              <label>Data Inizio</label>
+              <label>Data Inizio *</label>
             <input type="date" class="form-control" placeholder="Data Inizio" formControlName="startDate">
             <p class="text-danger" *ngIf="editProjectForm.get('startDate').invalid && editProjectForm.get('startDate').touched">
               <small>Il campo è obbligatorio</small></p>
@@ -55,11 +60,12 @@
             <h4>Tasks</h4>
           </div>
           <div class="col text-right">
-            <button class="btn btn-light btn-sm" (click)="onAddTask()" [disabled]="!editProjectForm.valid">Aggiungi
+            <button class="btn btn-light btn-sm" (click)="onAddTask()" [disabled]="!editProjectForm.valid || (this.editProjectForm.get('endDate').value!==null && this.editProjectForm.get('endDate').value!=='')">Aggiungi
               Task</button>
           </div>
         </div>
         <hr />
+     
         <div class="form-row "
           *ngFor="let taskControl of editProjectForm.get('projectTasks').controls; let i = index" [formGroupName]="i">
           <div class="col form-group">
@@ -80,8 +86,9 @@
           <div class="col form-group">
                
             <input type="number" class="form-control"   formControlName="duration">
-            <p class="text-danger" *ngIf="taskControl.get('duration').invalid && taskControl.get('duration').touched">
-                <small>Il valore massimo consentito è 24</small></p>
+         
+                <p class="text-danger" *ngIf="taskControl.get('duration').invalid && taskControl.get('duration').touched">
+                  <small>Campo Obbligatorio </small></p>
                
               </div>
           

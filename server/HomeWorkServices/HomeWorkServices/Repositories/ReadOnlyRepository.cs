@@ -12,7 +12,7 @@ namespace HomeWorkServices.Repositories
     {
         protected readonly DbContext _dbContext;
         protected readonly DbSet<T> _dbSet;
-        protected IQueryable<T> _queryableSet { get;  set; }
+        protected IQueryable<T> _queryableSet { get; set; }
 
 
         public ReadOnlyRepository(DbContext context)
@@ -22,7 +22,7 @@ namespace HomeWorkServices.Repositories
             _queryableSet = _dbSet.AsQueryable();
         }
 
-       
+
 
 
         public IQueryable<T> GetAll()
@@ -33,14 +33,21 @@ namespace HomeWorkServices.Repositories
 
         public async Task<ICollection<T>> GetAllAsync()
         {
-            
+
             return await _queryableSet.ToListAsync();
         }
 
-        public Task<T> GetByIdAsync(Tkey id)
+        public async Task<T> GetByAsync(Expression<Func<T, bool>> predicate = null, string[] navigations = null)
         {
 
-            return  _dbSet.FindAsync(id);
+            if (navigations != null)
+            {
+                foreach (var path in navigations)
+                {
+                    _queryableSet = _queryableSet.Include(path);
+                }
+            }
+            return await _queryableSet.FirstOrDefaultAsync(predicate);
         }
 
         public IQueryable<T> Where(Expression<Func<T, bool>> predicate = null)

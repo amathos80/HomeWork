@@ -11,7 +11,7 @@ namespace HomeWorkServices.Repositories
         Task AddAsync(T project);
         Task UpdateAsync(T project);
         Task DeleteAsync(T entity);
-        Task DeleteAsync(Tkey id);
+      
        
     }
 }

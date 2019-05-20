@@ -32,13 +32,14 @@ namespace HomeWorkServices.Services
 
         public async Task<bool> DeleteProjectAsync(ProjectDTO project)
         {
-            await _projectRepository.DeleteAsync(project.Id);
+            var prj =await _projectRepository.GetByAsync(c => c.Id == project.Id);
+            await _projectRepository.DeleteAsync(prj);
             return await _unitOfWork.CommitAsync() != 0;
         }
 
-        public async Task<ProjectDTO> GetProjectByIdAsync(int id)
+        public async Task<ProjectDTO> GetProjectByIdAsync(int id,string[] navigations=null)
         {
-            Project project = await _projectRepository.GetByIdAsync(id);
+            Project project = await _projectRepository.GetByAsync(c=>c.Id==id,navigations);
             return _mapper.Map<Project,ProjectDTO>(project);
         }
 
@@ -48,9 +49,9 @@ namespace HomeWorkServices.Services
             return  _mapper.Map<ICollection<Project>,ICollection<ProjectDTO>>(projects);
         }
 
-        public async Task<bool> UpdateProjectAsync(ProjectDTO project)
+    public async Task<bool> UpdateProjectAsync(ProjectDTO project, string[] navigations = null)
         {
-            var oldProject = await _projectRepository.GetByIdAsync(project.Id);
+            var oldProject = await _projectRepository.GetByAsync(c=>c.Id== project.Id, navigations);
             var newTask = _mapper.Map<ICollection<ProjectTaskDTO>, ICollection< ProjectTask> >(project.ProjectTasks);
             _mapper.Map<ProjectDTO, Project>(project, oldProject);
 
@@ -74,6 +75,14 @@ namespace HomeWorkServices.Services
            
 
             return await _unitOfWork.CommitAsync()!=0;
+        }
+
+        public async Task<bool> ProjectExistAsync(string name,int? id)
+        {
+            if (id == null)
+                return await Task.FromResult<bool>(_projectRepository.Where(c => c.Name.ToLower() == name.ToLower()).Count() > 0);
+            else
+                return await Task.FromResult<bool>(_projectRepository.Where(c => c.Name.ToLower() == name.ToLower() && c.Id != id.Value).Count() > 0);
         }
     }
 }

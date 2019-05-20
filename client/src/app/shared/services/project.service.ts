@@ -20,6 +20,15 @@ constructor(private http:HttpClient) {
             catchError(this.handleError<Project>('addProject'))
           );
     }
+
+    nameExist(name:string,idval?:number)
+    {
+      let id = (idval===null || idval===undefined) ? "" : idval;
+      const url =`${this.baseApiUrl}/ProjectNameExist/${name}/${id}`;
+      return this.http.get<boolean>(url).pipe(
+        catchError(this.handleError<boolean>(`cannot get if unique =${name}`))
+      );
+    }
     getAll() {
         return this.http.get<Project[]>(`${this.baseApiUrl}`)
           .pipe(

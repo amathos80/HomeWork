@@ -11,6 +11,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
 import { ProjectUpdateComponent } from './project-update/project-update.component';
 import { ProjectAddComponent } from './project-add/project-add.component';
+import { NavbarComponent } from './shared/components/navigationbar/navbar.component';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { UniqueNameValidatorDirective } from './shared/directives/ProjectDirectives';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { ProjectAddComponent } from './project-add/project-add.component';
     ProjectListComponent,
     ProjectDetailComponent,
     ProjectUpdateComponent,
-    ProjectAddComponent
+    ProjectAddComponent,
+    NavbarComponent,
+    HeaderComponent,
+    UniqueNameValidatorDirective
    
   ],
   imports: [

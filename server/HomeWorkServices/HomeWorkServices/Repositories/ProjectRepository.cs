@@ -27,7 +27,7 @@ namespace HomeWorkServices.Repositories
         public IProjectRepository Include(string navigationProperty)
         {
 
-            _queryableSet.Include(navigationProperty);
+            _queryableSet = _queryableSet.Include(navigationProperty);
             return this;
         }
 

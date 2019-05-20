@@ -28,60 +28,60 @@ namespace HomeWorkServices
         public HomeWorkContext(DbContextOptions options) : base(options)
         {
         }
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            try
-            {
+        //public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        //{
+        //    try
+        //    {
 
 
-                var entities = from e in ChangeTracker.Entries()
-                               where e.State == EntityState.Added
-                                   || e.State == EntityState.Modified
-                               select e.Entity;
-                foreach (var entity in entities)
-                {
-                    var validationContext = new ValidationContext(entity);
-                    Validator.ValidateObject(
-                        entity,
-                        validationContext,
-                        validateAllProperties: true);
-                }
+        //        var entities = from e in ChangeTracker.Entries()
+        //                       where e.State == EntityState.Added
+        //                           || e.State == EntityState.Modified
+        //                       select e.Entity;
+        //        foreach (var entity in entities)
+        //        {
+        //            var validationContext = new ValidationContext(entity);
+        //            Validator.ValidateObject(
+        //                entity,
+        //                validationContext,
+        //                validateAllProperties: true);
+        //        }
 
-                return base.SaveChangesAsync(cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                return base.SaveChangesAsync(cancellationToken);
-            }
+        //        return base.SaveChangesAsync(cancellationToken);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return base.SaveChangesAsync(cancellationToken);
+        //    }
 
            
-        }
-        public override int SaveChanges()
-        {
-            try
-            {
+        //}
+        //public override int SaveChanges()
+        //{
+        //    try
+        //    {
 
 
-                var entities = from e in ChangeTracker.Entries()
-                               where e.State == EntityState.Added
-                                   || e.State == EntityState.Modified
-                               select e.Entity;
-                foreach (var entity in entities)
-                {
-                    var validationContext = new ValidationContext(entity);
-                    Validator.ValidateObject(
-                        entity,
-                        validationContext,
-                        validateAllProperties: true);
-                }
+        //        var entities = from e in ChangeTracker.Entries()
+        //                       where e.State == EntityState.Added
+        //                           || e.State == EntityState.Modified
+        //                       select e.Entity;
+        //        foreach (var entity in entities)
+        //        {
+        //            var validationContext = new ValidationContext(entity);
+        //            Validator.ValidateObject(
+        //                entity,
+        //                validationContext,
+        //                validateAllProperties: true);
+        //        }
 
-                return base.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                return 0;
-            }
+        //        return base.SaveChanges();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return 0;
+        //    }
 
-        }
+        //}
     }
 }

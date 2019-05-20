@@ -23,11 +23,7 @@ namespace HomeWorkServices.Repositories
             await Task.FromResult(_dbSet.Remove(entity));
         }
 
-        public async Task DeleteAsync(Tkey id)
-        {
-            T entity = await this.GetByIdAsync(id);
-            await Task.FromResult(_dbSet.Remove(entity));
-        }
+       
 
         public async Task UpdateAsync(T project)
         {

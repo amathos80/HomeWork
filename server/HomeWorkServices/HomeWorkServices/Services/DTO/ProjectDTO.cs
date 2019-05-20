@@ -10,6 +10,7 @@ namespace HomeWorkServices.Services.DTO
         public ProjectDTO()
         {
             ProjectTasks = new List<ProjectTaskDTO>();
+            
         }
         public int Id { get; set; }
         public string Name { get; set; }
@@ -19,13 +20,13 @@ namespace HomeWorkServices.Services.DTO
         public string Priority { get; set; }
         public bool Completed { get; set; } = false;
         public ICollection<ProjectTaskDTO> ProjectTasks { get; set; }
-        public double SpentHours { get => CalculateSpentHours(); }
-        private Double CalculateSpentHours()
+        public double SpentHours { get=> CalculateSpentHours(); }
+        private double CalculateSpentHours()
         {
             if (ProjectTasks.Count > 0)
-                return ProjectTasks.Where(c => c.IsBillable == true).Sum(c => c.Duration);
+              return ProjectTasks.Where(c => c.IsBillable == true).Sum(c => c.Duration);
             else
-                return 0;
+               return 0;
         }
     }
 }

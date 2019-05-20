@@ -1,4 +1,4 @@
-<div class="row mt-5 justify-content-end">
+<!-- <div class="row mt-5 justify-content-end">
     <div class="col-8">
         <h2>Elenco progetti</h2>
     </div>
@@ -6,8 +6,9 @@
         <button class="btn" class="btn btn-primary" routerLink="/projects/add">Aggiungi Progetto</button>
     </div>
   </div>
-  <hr/>
+  <hr/> -->
 
+  <hw-header [title]="'Elenco progetti'" [buttonType]="'btn-primary'" [buttonLabel]="'Aggiungi Progetto'" [buttonLink]="'/projects/add'" ></hw-header>
 
 
 <div class="card-columns">
@@ -23,7 +24,7 @@
                   <small *ngIf="project.endDate"> - {{ project.endDate | date: 'dd/MM/yyyy' }}</small>
               </h6>
               <p class="card-text">{{ project.description }}</p>
-              <h5>Ore Spese: {{project.spentedHours}} </h5>
+              <h5>Ore Spese: {{project.spentHours}} </h5>
               <a href="#" class="btn btn-primary btn-sm" [routerLink]="['/projects/detail', project?.id]">Vai al Progetto</a>
           </div>
       </div>
